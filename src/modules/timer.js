@@ -15,11 +15,7 @@ const timer = (deadline) => {
 		return {timeRemaining, hours, minuts, seconds};
 	}
 
-	const editTime = (num) => {
-		num = (num < 10) ? '0' + num : num;
-
-		return num;
-	}
+	const editTime = num => (num < 10) ? `0${num}` : num;
 
 	const updateClock = () => {
 		let getTime = getTimeRemaining();
