@@ -13,6 +13,7 @@ const modal = () => {
 
 		popup.style.top = `${count}%`;
 		popup.style.opacity = `${count / 10}`;
+		popup.style.transform = `scale(${count / 10})`;
 		modal.style.opacity = `${count / 10}`;
 
 		if(count == 10) cancelAnimationFrame(idDown);
@@ -22,6 +23,7 @@ const modal = () => {
 		if(innerWidth >= 768) {
 			popup.style.top = '-65%';
 			popup.style.opacity = '0';
+			popup.style.transform = 'scale(0)'; 
 			modal.style.opacity = '0';
 
 			fallingDown();
@@ -31,6 +33,7 @@ const modal = () => {
 		modal.style.opacity = '';
 		popup.style.top = '';
 		popup.style.opacity = '';
+		popup.style.transform = ''; 
 	}
 
 	const hideModal = () => {
@@ -40,6 +43,7 @@ const modal = () => {
 			count = 0;
 			popup.style.top = '-65%';
 			popup.style.opacity = '0';
+			popup.style.transform = 'scale(0)'; 
 			modal.style.opacity = '0';
 
 			cancelAnimationFrame(idDown);
