@@ -1,16 +1,5 @@
 const validation = () => {
-	const form1name = document.getElementById('form1-name'),
-		form1email = document.getElementById('form1-email'),
-		form1phone = document.getElementById('form1-phone'),
-
-		form2name = document.getElementById('form2-name'),
-		form2email = document.getElementById('form2-email'),
-		form2phone = document.getElementById('form2-phone'),
-		form2message = document.getElementById('form2-message'),
-
-		form3name = document.getElementById('form3-name'),
-		form3email = document.getElementById('form3-email'),
-		form3phone = document.getElementById('form3-phone');
+	const allInputs = document.querySelectorAll('input');
 
 	const isCyrillic = /[^а-яёА-ЯЁ\s\-]/g,
 		isEmail = /[^a-zA-Z0-9\'\*\~\!\.\_\-\@]/g,
@@ -19,63 +8,42 @@ const validation = () => {
 		trimSpace = /\s{2,}/g,
 		trimHyphen = /\-{2,}/g;
 
-	const validationString = (event) => {
-		event.target.value = event.target.value.replace(trimSpace, " ");
-		event.target.value = event.target.value.replace(cutSpaceHyphen, "");
-		event.target.value = event.target.value.replace(trimHyphen, "-");
+	const trimSimbol = (e) => {
+		e.target.value = e.target.value.replace(trimSpace, " ");
+		e.target.value = e.target.value.replace(cutSpaceHyphen, "");
+		e.target.value = e.target.value.replace(trimHyphen, "-");
 	};
 
-	const capitalize = (event) => {
-		event.target.value = event.target.value.replace(/(^|\s)\S/g, function(str) {
+	const capitalize = (e) => {
+		e.target.value = e.target.value.replace(/(^|\s)\S/g, function(str) {
 			return str.toUpperCase();
 		});
 	};
 
-	form1name.addEventListener('blur', (e) => {
-		event.target.value = event.target.value.replace(isCyrillic, "");
-		validationString(e);
-		capitalize(e);
-	});
-	form2name.addEventListener('blur', (e) => {
-		event.target.value = event.target.value.replace(isCyrillic, "");
-		validationString(e);
-		capitalize(e);
-	});
-	form2message.addEventListener('blur', (e) => {
-		event.target.value = event.target.value.replace(isCyrillic, "");
-		validationString(e);
-	});
-	form3name.addEventListener('blur', (e) => {
-		event.target.value = event.target.value.replace(isCyrillic, "");
-		validationString(e);
-		capitalize(e);
-	});
+	const validationInput = (item, e) => {
+		trimSimbol(e);
 
-	form1email.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isEmail, "");
-		validationString(e);
-	});
-	form2email.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isEmail, "");
-		validationString(e);
-	});
-	form3email.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isEmail, "");
-		validationString(e);
-	});
+		switch(true) {
+			case item.name == 'user_name':
+				e.target.value = e.target.value.replace(isCyrillic, "");
+				capitalize(event);
+			break;
 
-	form1phone.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isPhone, "");
-		validationString(e);
-	});
-	form2phone.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isPhone, "");
-		validationString(e);
-	});
-	form3phone.addEventListener('blur', (e) => {
-		e.target.value = e.target.value.replace(isPhone, "");
-		validationString(e);
-	});
+			case item.name == 'user_message':
+				e.target.value = e.target.value.replace(isCyrillic, "");
+			break;
+
+			case item.name == 'user_email':
+				e.target.value = e.target.value.replace(isEmail, "");
+			break;
+
+			case item.name == 'user_phone':
+				e.target.value = e.target.value.replace(isPhone, "");
+			break;
+		}
+	};
+
+	allInputs.forEach(input => input.addEventListener('blur', event => validationInput(input, event)));
 }
 
 export default validation
