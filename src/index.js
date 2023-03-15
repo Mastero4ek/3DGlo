@@ -4,6 +4,7 @@ import modal from './modules/modal'
 import scroll from './modules/scroll'
 import calculator from './modules/calculator'
 import validation from './modules/validation'
+import tabs from './modules/tabs'
 
 
 timer('12 march 2023')
@@ -12,3 +13,4 @@ modal()
 scroll()
 calculator()
 validation()
+tabs()
