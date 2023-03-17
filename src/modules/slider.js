@@ -1,15 +1,17 @@
-const slider = () => {
-	const sliderBlock = document.querySelector('.portfolio-content'),
-		slides = document.querySelectorAll('.portfolio-item'),
-		dotsBlock = document.querySelector('.portfolio-dots'),
+const slider = (slider, slides, pagination, slideActive = 'slide-active', paginationDotActive = 'dot-active') => {
+	const sliderBlock = document.querySelector(slider),
+		allSlides = document.querySelectorAll(slides),
+		dotsBlock = document.querySelector(pagination),
 
 		timeInterval = 2000;
 
 	let currentSlide = 0,
 		interval;
 
+	if(sliderBlock === null) return;
+
 	const renderDots = () => {
-		for(let i = 0; i < slides.length; i++) {
+		for(let i = 0; i < allSlides.length; i++) {
 			const dot = document.createElement('li');
 
 			dot.classList.add('dot');
@@ -17,34 +19,41 @@ const slider = () => {
 		}
 	}
 
-	const prevSlide = (elems, index, strClass) => elems[index].classList.remove(strClass);
-	const nextSlide = (elems, index, strClass) => elems[index].classList.add(strClass);
+	const prevSlide = (elems, index, strClass) => {
+		if(elems[index] === undefined) return;
+		elems[index].classList.remove(strClass);
+	}
+
+	const nextSlide = (elems, index, strClass) => {
+		if(elems[index] === undefined) return;
+		elems[index].classList.add(strClass);
+	}
 
 	const autoSlide = () => {
-		const dots = document.querySelectorAll('.dot');
+		const allDots = document.querySelectorAll('.dot');
 
-		prevSlide(slides, currentSlide, 'portfolio-item-active');
-		prevSlide(dots, currentSlide, 'dot-active');
+		prevSlide(allSlides, currentSlide, slideActive);
+		prevSlide(allDots, currentSlide, paginationDotActive);
 		currentSlide++
 
-		if(currentSlide >= slides.length) currentSlide = 0;
+		if(currentSlide >= allSlides.length) currentSlide = 0;
 
-		nextSlide(slides, currentSlide, 'portfolio-item-active');
-		nextSlide(dots, currentSlide, 'dot-active');
+		nextSlide(allSlides, currentSlide, slideActive);
+		nextSlide(allDots, currentSlide, paginationDotActive);
 	}
 
 	const startSlide = (timer = 1500) => interval = setInterval(autoSlide, timer);
 	const stopSlide = () => clearInterval(interval);
 
 	sliderBlock.addEventListener('click', (e) => {
-		const dots = document.querySelectorAll('.dot');
+		const allDots = document.querySelectorAll('.dot');
 
 		e.preventDefault();
 
 		if(!e.target.matches('.dot, .portfolio-btn')) return;
 
-		prevSlide(slides, currentSlide, 'portfolio-item-active');
-		prevSlide(dots, currentSlide, 'dot-active');
+		prevSlide(allSlides, currentSlide, slideActive);
+		prevSlide(allDots, currentSlide, paginationDotActive);
 
 		if(e.target.matches('#arrow-right')) {
 			currentSlide++
@@ -53,16 +62,16 @@ const slider = () => {
 			currentSlide--
 		} else
 		if(e.target.classList.contains('dot')) {
-			dots.forEach((dot, index) => {
+			allDots.forEach((dot, index) => {
 				if(e.target === dot) currentSlide = index;
 			});
 		}
 
-		if(currentSlide >= slides.length) currentSlide = 0;
-		if(currentSlide < 0) currentSlide = slides.length - 1;
+		if(currentSlide >= allSlides.length) currentSlide = 0;
+		if(currentSlide < 0) currentSlide = allSlides.length - 1;
 
-		nextSlide(slides, currentSlide, 'portfolio-item-active');
-		nextSlide(dots, currentSlide, 'dot-active');
+		nextSlide(allSlides, currentSlide, slideActive);
+		nextSlide(allDots, currentSlide, paginationDotActive);
 	});
 
 	sliderBlock.addEventListener('mouseenter', (e) => {
@@ -72,6 +81,8 @@ const slider = () => {
 	sliderBlock.addEventListener('mouseleave', (e) => {
 		if(e.target.matches('.dot, .portfolio-btn')) startSlide(timeInterval);
 	}, true);
+
+	
 
 	renderDots();
 	startSlide(timeInterval);
