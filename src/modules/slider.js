@@ -17,16 +17,29 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 			dot.classList.add('dot');
 			dotsBlock.append(dot);
 		}
+
+		const allDots = document.querySelectorAll('.dot');
+
+		if(typeof allDots[0] === 'undefined') return;	
+		allDots[0].classList.add(paginationDotActive);
 	}
 
 	const prevSlide = (elems, index, strClass) => {
-		if(elems[index] === undefined) return;
-		elems[index].classList.remove(strClass);
+		if(typeof elems[index] === 'undefined') {
+			stopSlide();
+			return;
+		} else {
+			elems[index].classList.remove(strClass);
+		}
 	}
 
 	const nextSlide = (elems, index, strClass) => {
-		if(elems[index] === undefined) return;
-		elems[index].classList.add(strClass);
+		if(typeof elems[index] === 'undefined') {
+			stopSlide();
+			return;
+		} else {
+			elems[index].classList.add(strClass);
+		}
 	}
 
 	const autoSlide = () => {
@@ -81,8 +94,6 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 	sliderBlock.addEventListener('mouseleave', (e) => {
 		if(e.target.matches('.dot, .portfolio-btn')) startSlide(timeInterval);
 	}, true);
-
-	
 
 	renderDots();
 	startSlide(timeInterval);
