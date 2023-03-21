@@ -16,13 +16,13 @@ const calculator = (price = 100) => {
 		
 		let e = document.querySelector('#' + elem),
 			n = +total.textContent,
-			t = Math.round(duration / (num / step));
+			t = Math.round((duration / (num / step)) * 10);
 
 		if((num % 1 == 0 && num % 2 != 0) ||
 			(n % 1 == 0 && n % 2 != 0)) {
-			step = 15;
+			step = 25;
 		} else {
-			step = 10;
+			step = 20;
 		}
 
 		num = Math.round(num);
