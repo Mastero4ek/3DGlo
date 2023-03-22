@@ -1,3 +1,5 @@
+import {animate} from './helpers'
+
 const calculator = (price = 100) => {
 	const calcBlock = document.getElementById('calc'),
 		calcInputs = calcBlock.querySelectorAll('input'),
@@ -6,46 +8,6 @@ const calculator = (price = 100) => {
 		calcCount = calcBlock.querySelector('.calc-count'),
 		calcDay = calcBlock.querySelector('.calc-day'),
 		total = document.getElementById('total');
-
-//animation value
-
-	const outNum = (num, elem) => {
-		const duration = 500;
-
-		let	step;
-		
-		let e = document.querySelector('#' + elem),
-			n = +total.textContent,
-			t = Math.round((duration / (num / step)) * 10);
-
-		if((num % 1 == 0 && num % 2 != 0) ||
-			(n % 1 == 0 && n % 2 != 0)) {
-			step = 25;
-		} else {
-			step = 20;
-		}
-
-		num = Math.round(num);
-
-		let interval = setInterval(() => {
-			switch(true) {
-				case n < num:
-					n = n + step;
-				break;
-
-				case n > num:
-					n = n - step;
-				break;
-			}
-			
-			if (n == num) {
-				clearInterval(interval);
-			}
-			e.innerHTML = n;
-		}, t);
-	}
-	
-//calculation
 
 	calcInputs.forEach((input) => {
 		input.addEventListener('input', (e) => {
@@ -78,7 +40,15 @@ const calculator = (price = 100) => {
 			totalValue = 0;
 		}
 
-		outNum(totalValue, 'total');
+		animate({
+			duration: 500,
+			timing(timeFraction) {
+				return timeFraction;
+			},
+			draw(progress) {
+				total.innerHTML = Math.round(totalValue * progress);
+			}
+		});
 	}
 
 	calcBlock.addEventListener('input', (e) => {
