@@ -6,14 +6,14 @@ const menu = () => {
 	}
 
 	document.addEventListener('click', (e) => {
-		if(menu.classList.contains('active-menu') && !e.target.matches('menu')) {
+		if (menu.classList.contains('active-menu') && !e.target.matches('menu')) {
 			handleMenu();
 		} else
-		if(e.target.matches('.menu > img') ||
-			e.target.matches('.menu > small') ||
-			e.target.classList.contains('menu')) {
+			if (e.target.matches('.menu > img') ||
+				e.target.matches('.menu > small') ||
+				e.target.classList.contains('menu')) {
 				handleMenu();
-		}
+			}
 	});
 }
 

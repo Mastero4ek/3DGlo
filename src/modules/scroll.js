@@ -13,7 +13,7 @@ const scroll = () => {
 			block: "start"
 		});
 	}
-	
+
 	menuItems.forEach((link) => {
 		link.addEventListener('click', (e) => {
 			e.preventDefault();

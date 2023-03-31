@@ -1,4 +1,4 @@
-import {animate} from './helpers'
+import { animate } from './helpers'
 
 const modal = () => {
 	const modal = document.querySelector('.popup'),
@@ -7,8 +7,8 @@ const modal = () => {
 
 	const showModal = () => {
 		modal.style.display = 'block';
-		
-		if(innerWidth >= 768) {
+
+		if (innerWidth >= 768) {
 			popup.style.top = '-100%';
 			popup.style.opacity = '0';
 
@@ -26,17 +26,15 @@ const modal = () => {
 	}
 
 	const hideModal = () => {
-		if(innerWidth >= 768) {
-			modal.style.display = 'none';
-			popup.style.top = '';
-			popup.style.opacity = '';
-		}
+		modal.style.display = 'none';
+		popup.style.top = '';
+		popup.style.opacity = '';
 	}
 
 	buttons.forEach(btn => btn.addEventListener('click', showModal));
 
 	modal.addEventListener('click', (e) => {
-		if(!e.target.closest('.popup-content') ||
+		if (!e.target.closest('.popup-content') ||
 			e.target.classList.contains('popup-close')) {
 			hideModal();
 		}

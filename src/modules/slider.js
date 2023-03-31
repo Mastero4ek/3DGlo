@@ -8,10 +8,10 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 	let currentSlide = 0,
 		interval;
 
-	if(sliderBlock === null) return;
+	if (sliderBlock === null) return;
 
 	const renderDots = () => {
-		for(let i = 0; i < allSlides.length; i++) {
+		for (let i = 0; i < allSlides.length; i++) {
 			const dot = document.createElement('li');
 
 			dot.classList.add('dot');
@@ -20,12 +20,12 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 
 		const allDots = document.querySelectorAll('.dot');
 
-		if(typeof allDots[0] === 'undefined') return;	
+		if (typeof allDots[0] === 'undefined') return;
 		allDots[0].classList.add(paginationDotActive);
 	}
 
 	const prevSlide = (elems, index, strClass) => {
-		if(typeof elems[index] === 'undefined') {
+		if (typeof elems[index] === 'undefined') {
 			stopSlide();
 			return;
 		} else {
@@ -34,7 +34,7 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 	}
 
 	const nextSlide = (elems, index, strClass) => {
-		if(typeof elems[index] === 'undefined') {
+		if (typeof elems[index] === 'undefined') {
 			stopSlide();
 			return;
 		} else {
@@ -49,7 +49,7 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 		prevSlide(allDots, currentSlide, paginationDotActive);
 		currentSlide++
 
-		if(currentSlide >= allSlides.length) currentSlide = 0;
+		if (currentSlide >= allSlides.length) currentSlide = 0;
 
 		nextSlide(allSlides, currentSlide, slideActive);
 		nextSlide(allDots, currentSlide, paginationDotActive);
@@ -63,36 +63,36 @@ const slider = (slider, slides, pagination, slideActive = 'slide-active', pagina
 
 		e.preventDefault();
 
-		if(!e.target.matches('.dot, .portfolio-btn')) return;
+		if (!e.target.matches('.dot, .portfolio-btn')) return;
 
 		prevSlide(allSlides, currentSlide, slideActive);
 		prevSlide(allDots, currentSlide, paginationDotActive);
 
-		if(e.target.matches('#arrow-right')) {
+		if (e.target.matches('#arrow-right')) {
 			currentSlide++
 		} else
-		if(e.target.matches('#arrow-left')) {
-			currentSlide--
-		} else
-		if(e.target.classList.contains('dot')) {
-			allDots.forEach((dot, index) => {
-				if(e.target === dot) currentSlide = index;
-			});
-		}
+			if (e.target.matches('#arrow-left')) {
+				currentSlide--
+			} else
+				if (e.target.classList.contains('dot')) {
+					allDots.forEach((dot, index) => {
+						if (e.target === dot) currentSlide = index;
+					});
+				}
 
-		if(currentSlide >= allSlides.length) currentSlide = 0;
-		if(currentSlide < 0) currentSlide = allSlides.length - 1;
+		if (currentSlide >= allSlides.length) currentSlide = 0;
+		if (currentSlide < 0) currentSlide = allSlides.length - 1;
 
 		nextSlide(allSlides, currentSlide, slideActive);
 		nextSlide(allDots, currentSlide, paginationDotActive);
 	});
 
 	sliderBlock.addEventListener('mouseenter', (e) => {
-		if(e.target.matches('.dot, .portfolio-btn')) stopSlide();
+		if (e.target.matches('.dot, .portfolio-btn')) stopSlide();
 	}, true);
 
 	sliderBlock.addEventListener('mouseleave', (e) => {
-		if(e.target.matches('.dot, .portfolio-btn')) startSlide(timeInterval);
+		if (e.target.matches('.dot, .portfolio-btn')) startSlide(timeInterval);
 	}, true);
 
 	renderDots();

@@ -15,7 +15,7 @@ const validation = () => {
 	};
 
 	const capitalize = (e) => {
-		e.target.value = e.target.value.replace(/(^|\s)\S/g, function(str) {
+		e.target.value = e.target.value.replace(/(^|\s)\S/g, function (str) {
 			return str.toUpperCase();
 		});
 	};
@@ -23,23 +23,23 @@ const validation = () => {
 	const validationInput = (item, e) => {
 		trimSimbol(e);
 
-		switch(true) {
+		switch (true) {
 			case item.name == 'user_name':
 				e.target.value = e.target.value.replace(isCyrillic, "");
 				capitalize(event);
-			break;
+				break;
 
 			case item.name == 'user_message':
 				e.target.value = e.target.value.replace(isCyrillic, "");
-			break;
+				break;
 
 			case item.name == 'user_email':
 				e.target.value = e.target.value.replace(isEmail, "");
-			break;
+				break;
 
 			case item.name == 'user_phone':
 				e.target.value = e.target.value.replace(isPhone, "");
-			break;
+				break;
 		}
 	};
 

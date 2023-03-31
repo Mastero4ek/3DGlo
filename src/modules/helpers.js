@@ -1,4 +1,4 @@
-function animate({timing, draw, duration}) {
+function animate({ timing, draw, duration }) {
 
   let start = performance.now();
 
@@ -19,4 +19,4 @@ function animate({timing, draw, duration}) {
   });
 }
 
-export {animate}
+export { animate }
