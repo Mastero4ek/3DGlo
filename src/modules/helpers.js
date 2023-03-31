@@ -19,4 +19,8 @@ function animate({ timing, draw, duration }) {
   });
 }
 
-export { animate }
+function hideBlock(block, t) {
+  setTimeout(() => block.remove(), t)
+}
+
+export { animate, hideBlock }

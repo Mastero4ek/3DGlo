@@ -1,12 +1,20 @@
+import { showLoader, hideLoader } from "./loader"
+
 const sendForm = ({ formId, someElem = [] }) => {
     const form = document.getElementById(formId),
-        statusBlock = document.createElement('div'),
-        loadText = 'Загрузка...',
-        errorText = 'Ошибка...',
-        successText = 'Спасибо! Наш менеджер c вами свяжется';
+        errorBlock = document.createElement('div');
+
+    errorBlock.style.color = "#dc3545"
 
     const validate = (list) => {
         let success = true
+
+        const userName = form.querySelector('[name="user_name"]'),
+            userPhone = form.querySelector('[name="user_phone"]');
+
+        if (userName.value.length < 2 || userPhone.value.length < 11) {
+            success = false
+        }
 
         return success
     }
@@ -26,8 +34,7 @@ const sendForm = ({ formId, someElem = [] }) => {
         const formBody = {};
         const formElements = form.querySelectorAll('input');
 
-        statusBlock.textContent = loadText;
-        form.append(statusBlock)
+        showLoader(form)
 
         formData.forEach((val, key) => {
             formBody[key] = val
@@ -46,17 +53,31 @@ const sendForm = ({ formId, someElem = [] }) => {
         if (validate(formElements)) {
             sendData(formBody)
                 .then(data => {
-                    statusBlock.textContent = successText;
+                    hideLoader()
 
                     formElements.forEach(input => {
                         input.value = ''
                     })
                 })
                 .catch(error => {
-                    statusBlock.textContent = errorText;
+                    errorBlock.innerHTML = 'Ошибка! Не удалось отправить данные!'
+                    form.append(errorBlock)
+
+                    setTimeout(() => {
+                        hideLoader()
+                        errorBlock.remove()
+                        errorBlock.innerHTML = ''
+                    }, 3000)
                 })
         } else {
-            alert('Данные не валидны!!!')
+            hideLoader(form)
+            errorBlock.innerHTML = 'Ошибка! Введите верные данные!'
+            form.append(errorBlock)
+
+            setTimeout(() => {
+                errorBlock.remove()
+                errorBlock.innerHTML = ''
+            }, 3000)
         }
     }
 
