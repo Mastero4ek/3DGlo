@@ -1,5 +1,6 @@
 const menu = () => {
-	const menu = document.querySelector('menu');
+	const menu = document.querySelector('menu'),
+		closeBtn = document.querySelector('.close-btn');
 
 	const handleMenu = () => {
 		menu.classList.toggle('active-menu');
@@ -14,6 +15,12 @@ const menu = () => {
 				e.target.classList.contains('menu')) {
 				handleMenu();
 			}
+	});
+
+	closeBtn.addEventListener('click', (e) => {
+		e.preventDefault()
+
+		handleMenu();
 	});
 }
 

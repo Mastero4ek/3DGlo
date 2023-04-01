@@ -1,4 +1,5 @@
 import { showLoader, hideLoader } from "./loader"
+import { validateEmail } from "./helpers"
 
 const sendForm = ({ formId, someElem = [] }) => {
     const form = document.getElementById(formId),
@@ -10,9 +11,10 @@ const sendForm = ({ formId, someElem = [] }) => {
         let success = true
 
         const userName = form.querySelector('[name="user_name"]'),
+            userEmail = form.querySelector('[name="user_email"]'),
             userPhone = form.querySelector('[name="user_phone"]');
 
-        if (userName.value.length < 2 || userPhone.value.length < 11) {
+        if (userName.value.length < 2 || userPhone.value.length < 11 || !validateEmail(userEmail.value)) {
             success = false
         }
 
@@ -37,16 +39,23 @@ const sendForm = ({ formId, someElem = [] }) => {
         showLoader(form)
 
         formData.forEach((val, key) => {
-            formBody[key] = val
+            if (val != '') {
+                formBody[key] = val
+            }
         })
 
         someElem.forEach(elem => {
             const element = document.getElementById(elem.id)
 
-            if (elem.type === 'block') {
-                formBody[elem.id] = element.textContent
-            } else if (elem.type === 'input') {
-                formBody[elem.id] = element.value
+            switch (true) {
+                case elem.type === 'block':
+                    formBody[elem.id] = element.textContent
+                    if (formBody[elem.id] == '0') delete formBody[elem.id]
+                    break
+
+                case elem.type === 'input':
+                    formBody[elem.id] = element.value
+                    break
             }
         })
 
@@ -54,6 +63,7 @@ const sendForm = ({ formId, someElem = [] }) => {
             sendData(formBody)
                 .then(data => {
                     hideLoader()
+                    console.log(formBody)
 
                     formElements.forEach(input => {
                         input.value = ''
